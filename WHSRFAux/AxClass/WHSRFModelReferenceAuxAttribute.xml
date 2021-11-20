@@ -3,7 +3,7 @@
 	<Name>WHSRFModelReferenceAuxAttribute</Name>
 	<SourceCode>
 		<Declaration><![CDATA[
-public class WHSRFModelReferenceAuxAttribute
+public class WHSRFModelReferenceAuxAttribute extends SysAttribute
 {
     private Name className;
 

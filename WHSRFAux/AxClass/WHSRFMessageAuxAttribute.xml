@@ -6,7 +6,7 @@
 /// <summary>
 /// Attribute to mark method as message handler.
 /// </summary>
-public class WHSRFMessageAuxAttribute
+public class WHSRFMessageAuxAttribute extends SysAttribute
 {
     private str name;
 
