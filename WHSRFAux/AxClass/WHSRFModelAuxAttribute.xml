@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>WHSRFModelAuxAttribute</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+public class WHSRFModelAuxAttribute
+{
+    private str title;
+
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>new</Name>
+				<Source><![CDATA[
+    void new(str _title)
+    {
+        super();
+
+        title = _title;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>parmTitle</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Standard parm method.
+    /// </summary>
+    /// <param name = "_title">Value to set.</param>
+    /// <returns>Return value.</returns>
+    public str parmTitle(str _title = title)
+    {
+        title = _title;
+    
+        return title;
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

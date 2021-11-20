@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>WHSRFModelFieldAuxAttribute</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+public class WHSRFModelFieldAuxAttribute
+{
+    private int step;
+    private str title;
+
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>new</Name>
+				<Source><![CDATA[
+    void new(int _step, str _title = '')
+    {
+        super();
+
+        step = _step;
+        title = _title;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>parmStep</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Standard parm method.
+    /// </summary>
+    /// <param name = "_step">Value to set.</param>
+    /// <returns>Return value.</returns>
+    public int parmStep(int _step = step)
+    {
+        step = _step;
+    
+        return step;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>parmTitle</Name>
+				<Source><![CDATA[
+    public str parmTitle(str _title = title)
+    {
+        title = _title;
+    
+        return title;
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

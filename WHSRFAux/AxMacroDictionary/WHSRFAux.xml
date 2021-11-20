@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxMacroDictionary xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>WHSRFAux</Name>
+	<Source>#define.Model('$model')&#xD;
+#define.PageName('$pageName')&#xD;
+#define.Init('init')&#xD;
+#define.ViewMethodPostfix('View')&#xD;
+#define.MethodGenerateEventMessages('generateEventMessages')&#xD;
+#define.ByContractReadFieldValue('byContractReadFieldValue')</Source>
+	<Macros />
+</AxMacroDictionary>

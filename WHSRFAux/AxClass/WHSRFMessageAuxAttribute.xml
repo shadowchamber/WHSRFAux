@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>WHSRFMessageAuxAttribute</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+/// <summary>
+/// Attribute to mark method as message handler.
+/// </summary>
+public class WHSRFMessageAuxAttribute
+{
+    private str name;
+
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>new</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Standard constructor.
+    /// </summary>
+    /// <param name = "_name">Message name.</param>
+    void new(str _name)
+    {
+        super();
+
+        name = _name;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>parmName</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Standard parm method.
+    /// </summary>
+    /// <param name = "_name">Message name.</param>
+    /// <returns>Return value.</returns>
+    public str parmName(str _name = name)
+    {
+        name = _name;
+    
+        return name;
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

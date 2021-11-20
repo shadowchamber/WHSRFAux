@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <BuildTasksDirectory Condition=" '$(BuildTasksDirectory)' == ''">$(MSBuildProgramFiles32)\MSBuild\Microsoft\Dynamics\AX</BuildTasksDirectory>
+    <Model>WHSRFAux</Model>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <OutputPath>bin</OutputPath>
+    <SchemaVersion>2.0</SchemaVersion>
+    <GenerateCrossReferences>True</GenerateCrossReferences>
+    <RunAppCheckerRules>False</RunAppCheckerRules>
+    <LogAppcheckerDiagsAsErrors>False</LogAppcheckerDiagsAsErrors>
+    <ProjectGuid>{c725da32-b0d3-4d0a-afa4-190dab62a519}</ProjectGuid>
+    <Name>WHSRFAux</Name>
+    <RootNamespace>WHSRFAux</RootNamespace>
+    <StartupType>MenuItemAction</StartupType>
+    <StartupObject>WHSWorkExecute</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <Configuration>Debug</Configuration>
+    <DBSyncInBuild>False</DBSyncInBuild>
+    <GenerateFormAdaptors>False</GenerateFormAdaptors>
+    <Company>
+    </Company>
+    <Partition>initial</Partition>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DataEntityExpandParentChildRelations>False</DataEntityExpandParentChildRelations>
+    <DataEntityUseLabelTextAsFieldName>False</DataEntityUseLabelTextAsFieldName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Classes\" />
+    <Folder Include="Macros\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AxClass\WHSRFMessageAuxAttribute">
+      <SubType>Content</SubType>
+      <Name>WHSRFMessageAuxAttribute</Name>
+      <Link>Classes\WHSRFMessageAuxAttribute</Link>
+    </Content>
+    <Content Include="AxClass\WHSRFModelAuxAttribute">
+      <SubType>Content</SubType>
+      <Name>WHSRFModelAuxAttribute</Name>
+      <Link>Classes\WHSRFModelAuxAttribute</Link>
+    </Content>
+    <Content Include="AxClass\WHSRFModelFieldAuxAttribute">
+      <SubType>Content</SubType>
+      <Name>WHSRFModelFieldAuxAttribute</Name>
+      <Link>Classes\WHSRFModelFieldAuxAttribute</Link>
+    </Content>
+    <Content Include="AxClass\WHSRFModelReferenceAuxAttribute">
+      <SubType>Content</SubType>
+      <Name>WHSRFModelReferenceAuxAttribute</Name>
+      <Link>Classes\WHSRFModelReferenceAuxAttribute</Link>
+    </Content>
+    <Content Include="AxClass\WhsWorkExecuteDisplayAux_Extension">
+      <SubType>Content</SubType>
+      <Name>WhsWorkExecuteDisplayAux_Extension</Name>
+      <Link>Classes\WhsWorkExecuteDisplayAux_Extension</Link>
+    </Content>
+    <Content Include="AxMacroDictionary\WHSRFAux">
+      <SubType>Content</SubType>
+      <Name>WHSRFAux</Name>
+      <Link>Macros\WHSRFAux</Link>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.Common.targets" />
+  <Import Project="$(BuildTasksDirectory)\Microsoft.Dynamics.Framework.Tools.BuildTasks.targets" />
+</Project>
