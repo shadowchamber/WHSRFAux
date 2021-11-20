@@ -6,6 +6,7 @@
 #define.Init('init')&#xD;
 #define.ViewMethodPostfix('View')&#xD;
 #define.MethodGenerateEventMessages('generateEventMessages')&#xD;
-#define.ByContractReadFieldValue('byContractReadFieldValue')</Source>
+#define.ByContractReadFieldValue('byContractReadFieldValue')&#xD;
+#define.Aux('Aux')</Source>
 	<Macros />
 </AxMacroDictionary>

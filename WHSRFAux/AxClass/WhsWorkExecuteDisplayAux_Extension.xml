@@ -542,7 +542,14 @@ final class WhsWorkExecuteDisplayAux_Extension
 
         SysDictClass dictClass = new SysDictClass(classIdGet(this));
 
-        res = dictClass.callObject(pageName + #ViewMethodPostfix, this, res, _model);
+        if (dictClass.hasObjectMethod(pageName + #ViewMethodPostfix))
+        {
+            res = dictClass.callObject(pageName + #ViewMethodPostfix, this, res, _model);
+        }
+        else if (dictClass.hasObjectMethod(pageName + #ViewMethodPostfix + #Aux))
+        {
+            res = dictClass.callObject(pageName + #ViewMethodPostfix + #Aux, this, res, _model);
+        }
 
         res = this.updateModeStepPass(res, mode, step, pass);
 
