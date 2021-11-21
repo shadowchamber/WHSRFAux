@@ -3,10 +3,12 @@
 	<Name>WHSRFModelFieldAuxAttribute</Name>
 	<SourceCode>
 		<Declaration><![CDATA[
+/// <summary>
+/// Model field attribute.
+/// </summary>
 public class WHSRFModelFieldAuxAttribute extends SysAttribute
 {
     private int step;
-    private str title;
 
 }
 ]]></Declaration>
@@ -14,41 +16,29 @@ public class WHSRFModelFieldAuxAttribute extends SysAttribute
 			<Method>
 				<Name>new</Name>
 				<Source><![CDATA[
-    void new(int _step, str _title = '')
+    /// <summary>
+    /// Standard constructor.
+    /// </summary>
+    /// <param name = "_step">number of step (int)</param>
+    void new(int _step)
     {
         super();
 
         step = _step;
-        title = _title;
     }
 
 ]]></Source>
 			</Method>
 			<Method>
-				<Name>parmStep</Name>
+				<Name>step</Name>
 				<Source><![CDATA[
     /// <summary>
-    /// Standard parm method.
+    /// Step int value.
     /// </summary>
-    /// <param name = "_step">Value to set.</param>
-    /// <returns>Return value.</returns>
-    public int parmStep(int _step = step)
+    /// <returns>Step value (int).</returns>
+    public int step()
     {
-        step = _step;
-    
         return step;
-    }
-
-]]></Source>
-			</Method>
-			<Method>
-				<Name>parmTitle</Name>
-				<Source><![CDATA[
-    public str parmTitle(str _title = title)
-    {
-        title = _title;
-    
-        return title;
     }
 
 ]]></Source>

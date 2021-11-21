@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>WHSRFDataServiceAuxAttribute</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+/// <summary>
+/// Data service attribute.
+/// </summary>
+public class WHSRFDataServiceAuxAttribute extends SysAttribute
+{
+    private ClassName serviceClassName;
+    private MethodName serviceMethodName;
+
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>new</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Standard constructor.
+    /// </summary>
+    /// <param name = "_serviceClassName">service class name as string.</param>
+    /// <param name = "_serviceMethodName">service method name (entry point) as string</param>
+    void new(ClassName   _serviceClassName,
+             MethodName  _serviceMethodName)
+    {
+        super();
+
+        serviceClassName = _serviceClassName;
+        serviceMethodName = _serviceMethodName;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>serviceClassName</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Service name.
+    /// </summary>
+    /// <returns>service name string.</returns>
+    public str serviceClassName()
+    {
+        return serviceClassName;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>serviceMethodName</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Service method name string.
+    /// </summary>
+    /// <returns>service method name string.</returns>
+    public str serviceMethodName()
+    {
+        return serviceMethodName;
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

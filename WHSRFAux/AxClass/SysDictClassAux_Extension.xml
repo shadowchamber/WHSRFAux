@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>SysDictClassAux_Extension</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+/// <summary>
+/// SysDictClass class extension.
+/// </summary>
+[ExtensionOf(classStr(SysDictClass))]
+final class SysDictClassAux_Extension
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>getMethod</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Gets SysDictMethod object by method name.
+    /// </summary>
+    /// <param name = "_name">Name of the method.</param>
+    /// <returns>SysDictMethod</returns>
+    public SysDictMethod getMethod(str _name)
+    {
+        SetEnumerator se = this.methods().getEnumerator();
+
+        while (se.moveNext())
+        {
+            SysDictMethod method = se.current() as SysDictMethod;
+
+            if (method.name() != _name)
+            {
+                continue;
+            }
+
+            return method;
+        }
+
+        return null;
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

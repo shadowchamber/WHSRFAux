@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Diagnostics
+  GenerationTime="2021-11-21T14:35:53.0084628+02:00">
+  <Items>
+    <Diagnostic>
+      <DiagnosticType>VisualStudioIntegration</DiagnosticType>
+      <Severity>Informational</Severity>
+      <Path>k:\AOSService\PackagesLocalDirectory\bin\xppbp.exe</Path>
+      <Moniker>k:\AOSService\PackagesLocalDirectory\bin\xppbp.exe -metadata="k:\AOSService\PackagesLocalDirectory" -compilerMetadata="k:\AOSService\PackagesLocalDirectory" -referenceFolder="k:\AOSService\PackagesLocalDirectory" -all -module="WHSRFAux" -model="WHSRFAux" -xmlLog="k:\AOSService\PackagesLocalDirectory\WHSRFAux\BPCheck.WHSRFAux.xml" </Moniker>
+      <Message>k:\AOSService\PackagesLocalDirectory\bin\xppbp.exe -metadata="k:\AOSService\PackagesLocalDirectory" -compilerMetadata="k:\AOSService\PackagesLocalDirectory" -referenceFolder="k:\AOSService\PackagesLocalDirectory" -all -module="WHSRFAux" -model="WHSRFAux" -xmlLog="k:\AOSService\PackagesLocalDirectory\WHSRFAux\BPCheck.WHSRFAux.xml" </Message>
+    </Diagnostic>
+  </Items>
+  <Aliases />
+</Diagnostics>

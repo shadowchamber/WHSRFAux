@@ -1,72 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
-	<Name>WhsWorkExecuteDisplayAux_Extension</Name>
+	<Name>WhsWorkExecuteDisplayAux</Name>
 	<SourceCode>
 		<Declaration><![CDATA[
 /// <summary>
-/// WhsWorkExecuteDisplay extension class.
+/// WhsWorkExecuteDisplay auxiliary class.
 /// </summary>
-[ExtensionOf(classStr(WhsWorkExecuteDisplay))]
-final class WhsWorkExecuteDisplayAux_Extension
+public class WhsWorkExecuteDisplayAux extends WhsWorkExecuteDisplay
 {
     #WHSRF
     #WHSRFAux
 
-    public container originalContainer;
-    public List messageQueue;
-    public container switchProcessContainer;
-    public ClassName serviceClassName;
-    public MethodName serviceMethodName;
+    protected container originalContainer;
+    protected List messageQueue;
+    protected container switchProcessContainer;
+    protected ClassName serviceClassName;
+    protected MethodName serviceMethodName;
+    protected ClassName modelClassName;
+    protected str doneText;
 
 }
 ]]></Declaration>
 		<Methods>
 			<Method>
-				<Name>displayFormByContractAux</Name>
+				<Name>displayForm</Name>
 				<Source><![CDATA[
-    public container displayFormByContractAux(
-        container   _con,
-        str         _extraText,
-        ClassName   _serviceClassName,
-        MethodName  _serviceMethodName)
-    {
-        serviceClassName = _serviceClassName;
-        serviceMethodName = _serviceMethodName;
-
-        return this.displayFormMVUAux(_con, _extraText);
-    }
-
-]]></Source>
-			</Method>
-			<Method>
-				<Name>isByContractAux</Name>
-				<Source><![CDATA[
-    public boolean isByContractAux()
-    {
-        return serviceClassName != '' || serviceMethodName != '';
-    }
-
-]]></Source>
-			</Method>
-			<Method>
-				<Name>displayFormMVUAux</Name>
-				<Source><![CDATA[
-    public container displayFormMVUAux(
+    public container displayForm(
         container   _con,
         str         _extraText = '')
     {
+        SysDictClass dictClass = new SysDictClass(classIdGet(this));
+        WHSRFDataServiceAuxAttribute serviceAttribute = dictClass.getAttribute(classStr(WHSRFDataServiceAuxAttribute)) as WHSRFDataServiceAuxAttribute;
+
+        serviceClassName = serviceAttribute.serviceClassName();
+        serviceMethodName = serviceAttribute.serviceMethodName();
+
+        SysDictClass dictClassModel = new SysDictClass(className2Id(serviceAttribute.serviceClassName()));
+
+        SysDictMethod dictMethod = dictClassModel.getMethod(serviceMethodName);
+
+        if (dictMethod.parameterCnt() != 1)
+        {
+            throw Error("@WHSRFAux:ERR001");
+        }
+
+        modelClassName = dictMethod.parameterTypeName(1);
+
         originalContainer = _con;
 
         messageQueue = new List(Types::Container);
-
-        container stateInfo = conPeek(_con, #StateInfo);
 
         pass = WHSRFPassthrough::create(conPeek(_con, #PassthroughInfo));
         
         Object model = this.getModelAux();
 
-        this.generateStandardEventMessagesAux(model);
-        this.callGenerateEventMessagesAux(model);
+        this.generateEventMessagesAux(model);
 
         model = this.processMessagesAux(model);
 
@@ -78,6 +66,11 @@ final class WhsWorkExecuteDisplayAux_Extension
 			<Method>
 				<Name>processMessagesAux</Name>
 				<Source><![CDATA[
+    /// <summary>
+    /// Process MVU messages.
+    /// </summary>
+    /// <param name = "_model">model object (state).</param>
+    /// <returns>model object (modified).</returns>
     protected Object processMessagesAux(Object _model)
     {
         Object model = _model;
@@ -111,6 +104,12 @@ final class WhsWorkExecuteDisplayAux_Extension
 			<Method>
 				<Name>switchToProcessAux</Name>
 				<Source><![CDATA[
+    /// <summary>
+    /// Mark to switch to another WHS process.
+    /// </summary>
+    /// <param name = "_model">nodel object.</param>
+    /// <param name = "_con">modified container for switching.</param>
+    /// <returns>model object.</returns>
     protected Object switchToProcessAux(Object _model, container _con)
     {
         Object model = _model;
@@ -125,7 +124,14 @@ final class WhsWorkExecuteDisplayAux_Extension
 			<Method>
 				<Name>updateAux</Name>
 				<Source><![CDATA[
-    public Object updateAux(str _message, Object _model, anytype _data)
+    /// <summary>
+    /// Updates model (MVU).
+    /// </summary>
+    /// <param name = "_message">message name string.</param>
+    /// <param name = "_model">model object.</param>
+    /// <param name = "_data">message data for model updating.</param>
+    /// <returns>model object.</returns>
+    protected Object updateAux(str _message, Object _model, anytype _data)
     {
         Object model = _model;
 
@@ -133,7 +139,7 @@ final class WhsWorkExecuteDisplayAux_Extension
 
         if (!objectHasMethod(this, _message))
         {
-            throw error(strFmt('object does not have such method %1', _message));
+            throw error(strFmt("@WHSRFAux:ERR002", _message));
         }
 
         SysDictClass dictClass = new SysDictClass(classIdGet(this));
@@ -161,7 +167,7 @@ final class WhsWorkExecuteDisplayAux_Extension
             {
                 Debug::assert(false);
 
-                throw Error('wrong use of method');
+                throw Error("@WHSRFAux:ERR003");
             }
 
             break;
@@ -173,16 +179,22 @@ final class WhsWorkExecuteDisplayAux_Extension
 ]]></Source>
 			</Method>
 			<Method>
-				<Name>byContractReadFieldValueViewAux</Name>
+				<Name>readFieldValueViewAux</Name>
 				<Source><![CDATA[
-    private container byContractReadFieldValueViewAux(container _con, Object _model)
+    /// <summary>
+    /// Reads field value from form.
+    /// </summary>
+    /// <param name = "_con">WHSRF container.</param>
+    /// <param name = "_model">model object.</param>
+    /// <returns>WHSRF form container.</returns>
+    protected container readFieldValueViewAux(container _con, Object _model)
     {
         container ret = _con;
 
         SysDictClass dictClass = new SysDictClass(classIdGet(_model));
 
         WHSRFModelFieldAuxAttribute fieldAttribute;
-        SysDictMethod fieldMethodInfo = this.byContractGetCurrentFieldMethodInfoAux(_model);
+        SysDictMethod fieldMethodInfo = this.getCurrentFieldMethodInfoAux(_model);
 
         fieldAttribute = fieldMethodInfo.getAttribute(classStr(WHSRFModelFieldAuxAttribute)) as WHSRFModelFieldAuxAttribute;
 
@@ -205,7 +217,7 @@ final class WhsWorkExecuteDisplayAux_Extension
         str labelFieldName = fieldMethodInfo.name() + 'Label';
         str textFieldName = fieldMethodInfo.name() + 'Text';
  
-        ret += [this.buildControl(#RFLabel, labelFieldName, modelAttribute.parmTitle(), 1, '', #WHSRFUndefinedDataType, '', 0)];
+        ret += [this.buildControl(#RFLabel, labelFieldName, modelAttribute.title(), 1, '', #WHSRFUndefinedDataType, '', 0)];
         ret += [this.buildControl(#RFText, textFieldName, dictType.label(), 1, strFmt('%1', value), extTypeId, '', 0)];
         ret += [this.buildControl(#RFButton, #RFOK, "@SYS5473", 1, '', #WHSRFUndefinedDataType, '', 1)];
         ret += [this.buildControl(#RFButton, #RFCancel, "@SYS50163", 1, '', #WHSRFUndefinedDataType, '', 0)];
@@ -216,9 +228,14 @@ final class WhsWorkExecuteDisplayAux_Extension
 ]]></Source>
 			</Method>
 			<Method>
-				<Name>byContractInitAux</Name>
+				<Name>initAux</Name>
 				<Source><![CDATA[
-    protected Object byContractInitAux(Object _model)
+    /// <summary>
+    /// Default init message handler.
+    /// </summary>
+    /// <param name = "_model">model object.</param>
+    /// <returns>model object.</returns>
+    protected Object initAux(Object _model)
     {
         Object ret = _model;
 
@@ -226,7 +243,7 @@ final class WhsWorkExecuteDisplayAux_Extension
 
         ret = dictClass.makeObject();
 
-        this.setPageNameAux(#ByContractReadFieldValue);
+        this.setPageNameAux(#ReadFieldValue);
 
         return ret;
     }
@@ -234,17 +251,35 @@ final class WhsWorkExecuteDisplayAux_Extension
 ]]></Source>
 			</Method>
 			<Method>
-				<Name>byContractDoneViewAux</Name>
+				<Name>doneViewAux</Name>
 				<Source><![CDATA[
-    private container byContractDoneViewAux(container _con, Object _model)
+    /// <summary>
+    /// Done view.
+    /// </summary>
+    /// <param name = "_con">WHSRF container.</param>
+    /// <param name = "_model">model object.</param>
+    /// <returns>WHSRF form container.</returns>
+    protected container doneViewAux(container _con, Object _model)
     {
         container ret = _con;
 
         SysDictClass dictClass = new SysDictClass(classIdGet(_model));
         WHSRFModelAuxAttribute modelAttribute = dictClass.getAttribute(classStr(WHSRFModelAuxAttribute)) as WHSRFModelAuxAttribute;
  
-        ret += [this.buildControl(#RFLabel, 'TitleLabel', modelAttribute.parmTitle(), 1, '', #WHSRFUndefinedDataType, '', 0)];
-        ret += [this.buildControl(#RFLabel, 'DoneLabel', 'Done text', 1, '', #WHSRFUndefinedDataType, '', 0)];
+        ret += [this.buildControl(#RFLabel, 'TitleLabel', modelAttribute.title(), 1, '', #WHSRFUndefinedDataType, '', 0)];
+
+        SysInfologEnumerator sysInfologEnumerator = SysInfologEnumerator::newData(infolog.infologData());
+        int i = 1;
+
+        while (sysInfologEnumerator.moveNext())
+        {
+            SysInfologMessageStruct infoMessageStruct = SysInfologMessageStruct::construct(sysInfologEnumerator.currentMessage());
+
+            ret += [this.buildControl(#RFLabel, strFmt('DoneLabel %1', i), infoMessageStruct.message(), 1, '', #WHSRFUndefinedDataType, '', 0)];
+
+            i++;
+        }
+
         ret += [this.buildControl(#RFButton, #RFOK, "@SYS5473", 1, '', #WHSRFUndefinedDataType, '', 1)];
         ret += [this.buildControl(#RFButton, #RFCancel, "@SYS50163", 1, '', #WHSRFUndefinedDataType, '', 0)];
  
@@ -254,22 +289,27 @@ final class WhsWorkExecuteDisplayAux_Extension
 ]]></Source>
 			</Method>
 			<Method>
-				<Name>byContractInvokeServiceMethodAux</Name>
+				<Name>invokeServiceMethodAux</Name>
 				<Source><![CDATA[
-    protected Object byContractInvokeServiceMethodAux(Object _model)
+    /// <summary>
+    /// Invokes service method assigned by WHSRFDataServiceAux attirbute.
+    /// </summary>
+    /// <param name = "_model">model object.</param>
+    /// <returns>model object.</returns>
+    protected Object invokeServiceMethodAux(Object _model)
     {
         SysDictClass dictClass = new SysDictClass(className2Id(serviceClassName));
 
         if (!dictClass.hasObjectMethod(serviceMethodName))
         {
-            throw Error(strFmt('Service class does not have method %1', serviceMethodName));
+            throw Error(strFmt("@WHSRFAux:ERR004", serviceMethodName));
         }
 
         Object service = dictClass.makeObject();
 
         dictClass.callObject(serviceMethodName, service, _model);
 
-        this.setPageNameAux('byContractDone');
+        this.setPageNameAux('done');
 
         step = 0;
 
@@ -279,14 +319,20 @@ final class WhsWorkExecuteDisplayAux_Extension
 ]]></Source>
 			</Method>
 			<Method>
-				<Name>byContractUpdateModelByFieldAux</Name>
+				<Name>updateModelByFieldAux</Name>
 				<Source><![CDATA[
-    protected Object byContractUpdateModelByFieldAux(Object _model, anytype _value)
+    /// <summary>
+    /// Updates model by field value.
+    /// </summary>
+    /// <param name = "_model">model object.</param>
+    /// <param name = "_value">value (anytype)</param>
+    /// <returns>model object.</returns>
+    protected Object updateModelByFieldAux(Object _model, anytype _value)
     {
         SysDictClass dictClass = new SysDictClass(classIdGet(_model));
 
         WHSRFModelFieldAuxAttribute fieldAttribute;
-        SysDictMethod fieldMethodInfo = this.byContractGetCurrentFieldMethodInfoAux(_model);
+        SysDictMethod fieldMethodInfo = this.getCurrentFieldMethodInfoAux(_model);
 
         fieldAttribute = fieldMethodInfo.getAttribute(classStr(WHSRFModelFieldAuxAttribute)) as WHSRFModelFieldAuxAttribute;
 
@@ -298,15 +344,15 @@ final class WhsWorkExecuteDisplayAux_Extension
 
         dictClass.callObject(fieldMethodInfo.name(), _model, _value);
 
-            this.setPageNameAux(#ByContractReadFieldValue);
+        this.setPageNameAux(#ReadFieldValue);
 
         step++;
 
-        fieldMethodInfo = this.byContractGetCurrentFieldMethodInfoAux(_model); // for checking if finished
+        fieldMethodInfo = this.getCurrentFieldMethodInfoAux(_model); // for checking if finished
 
         if (fieldMethodInfo == null)
         {
-            this.dispatchAux(methodStr(WhsWorkExecuteDisplay, byContractInvokeServiceMethodAux), _value);
+            this.dispatchAux(methodStr(WhsWorkExecuteDisplayAux, invokeServiceMethodAux), _value);
         }
 
         return _model;
@@ -315,9 +361,14 @@ final class WhsWorkExecuteDisplayAux_Extension
 ]]></Source>
 			</Method>
 			<Method>
-				<Name>byContractGetCurrentFieldMethodInfoAux</Name>
+				<Name>getCurrentFieldMethodInfoAux</Name>
 				<Source><![CDATA[
-    protected SysDictMethod byContractGetCurrentFieldMethodInfoAux(Object _model)
+    /// <summary>
+    /// Gets current field SysDictMethod object.
+    /// </summary>
+    /// <param name = "_model">model object.</param>
+    /// <returns>SysDictMethod object.</returns>
+    protected SysDictMethod getCurrentFieldMethodInfoAux(Object _model)
     {
         SysDictClass dictClass = new SysDictClass(classIdGet(_model));
 
@@ -337,7 +388,7 @@ final class WhsWorkExecuteDisplayAux_Extension
                 continue;
             }
 
-            if (attribute.parmStep() != step)
+            if (attribute.step() != step)
             {
                 continue;
             }
@@ -353,73 +404,48 @@ final class WhsWorkExecuteDisplayAux_Extension
 ]]></Source>
 			</Method>
 			<Method>
-				<Name>byContractGenerateStandardEventMessagesAux</Name>
+				<Name>generateEventMessagesAux</Name>
 				<Source><![CDATA[
-    protected void byContractGenerateStandardEventMessagesAux(Object _model)
-    {
-        SysDictClass dictClass = new SysDictClass(classIdGet(_model));
-
-        WHSRFModelFieldAuxAttribute fieldAttribute;
-        SysDictMethod fieldMethodInfo = this.byContractGetCurrentFieldMethodInfoAux(_model);
-
-        fieldAttribute = fieldMethodInfo.getAttribute(classStr(WHSRFModelFieldAuxAttribute)) as WHSRFModelFieldAuxAttribute;
-
-        if (fieldAttribute == null
-            || fieldMethodInfo == null)
-        {
-            return;
-        }
-
-        WHSRFModelAuxAttribute modelAttribute = dictClass.getAttribute(classStr(WHSRFModelAuxAttribute)) as WHSRFModelAuxAttribute;
-
-        str textFieldName = fieldMethodInfo.name() + 'Text';
-
-        str	value = this.getControlDataFromContainer(this.parmOriginalContainerAux(), textFieldName);
-
-        this.dispatchAux(methodStr(WhsWorkExecuteDisplay, byContractUpdateModelByFieldAux), value);
-    }
-
-]]></Source>
-			</Method>
-			<Method>
-				<Name>generateStandardEventMessagesAux</Name>
-				<Source><![CDATA[
-    protected void generateStandardEventMessagesAux(Object _model)
+    /// <summary>
+    /// Generates standard event mesages.
+    /// </summary>
+    /// <param name = "_model">model object.</param>
+    protected void generateEventMessagesAux(Object _model)
     {
         if (step == 0)
         {
-            if (this.isByContractAux())
+            SysDictClass dictClass = new SysDictClass(classIdGet(this));
+
+            if(dictClass.hasObjectMethod(#Init))
             {
-                this.dispatchAux(methodStr(WhsWorkExecuteDisplay, byContractInitAux), null);
+                this.dispatchAux(#Init, null);
             }
             else
             {
-                this.dispatchAux(#Init, null);
+                this.dispatchAux(methodStr(WhsWorkExecuteDisplayAux, initAux), null);
             }
 
             step = 1;
         }
-        else if (this.isByContractAux())
+        else
         {
-            this.byContractGenerateStandardEventMessagesAux(_model);
+            WHSRFModelFieldAuxAttribute fieldAttribute;
+            SysDictMethod fieldMethodInfo = this.getCurrentFieldMethodInfoAux(_model);
+
+            fieldAttribute = fieldMethodInfo.getAttribute(classStr(WHSRFModelFieldAuxAttribute)) as WHSRFModelFieldAuxAttribute;
+
+            if (fieldAttribute == null
+                || fieldMethodInfo == null)
+            {
+                return;
+            }
+
+            str textFieldName = fieldMethodInfo.name() + 'Text';
+
+            str	value = this.getControlDataFromContainer(this.parmOriginalContainerAux(), textFieldName);
+
+            this.dispatchAux(methodStr(WhsWorkExecuteDisplayAux, updateModelByFieldAux), value);
         }
-    }
-
-]]></Source>
-			</Method>
-			<Method>
-				<Name>callGenerateEventMessagesAux</Name>
-				<Source><![CDATA[
-    public void callGenerateEventMessagesAux(Object _model)
-    {
-        SysDictClass dictClass = new SysDictClass(classIdGet(this));
-
-        if (!objectHasMethod(this, #MethodGenerateEventMessages))
-        {
-            return;
-        }
-
-        dictClass.callObject(#MethodGenerateEventMessages, this, _model);
     }
 
 ]]></Source>
@@ -427,7 +453,12 @@ final class WhsWorkExecuteDisplayAux_Extension
 			<Method>
 				<Name>dispatchAux</Name>
 				<Source><![CDATA[
-    public void dispatchAux(str _message, anytype _data = null)
+    /// <summary>
+    /// Add message to the queue for processing.
+    /// </summary>
+    /// <param name = "_message">message name string.</param>
+    /// <param name = "_data">anytype message data.</param>
+    protected void dispatchAux(str _message, anytype _data = null)
     {
         messageQueue.addEnd([_message, _data]);
     }
@@ -442,7 +473,7 @@ final class WhsWorkExecuteDisplayAux_Extension
     /// </summary>
     /// <param name = "_originalContainer">Value to set.</param>
     /// <returns>Return value.</returns>
-    public container parmOriginalContainerAux(container _originalContainer = originalContainer)
+    protected container parmOriginalContainerAux(container _originalContainer = originalContainer)
     {
         originalContainer = _originalContainer;
     
@@ -454,7 +485,11 @@ final class WhsWorkExecuteDisplayAux_Extension
 			<Method>
 				<Name>setPageNameAux</Name>
 				<Source><![CDATA[
-    public void setPageNameAux(str _pageName)
+    /// <summary>
+    /// Puts page name string to pass.
+    /// </summary>
+    /// <param name = "_pageName">page name string.</param>
+    protected void setPageNameAux(str _pageName)
     {
         if (pass.exists(#PageName))
         {
@@ -469,7 +504,11 @@ final class WhsWorkExecuteDisplayAux_Extension
 			<Method>
 				<Name>getPageNameAux</Name>
 				<Source><![CDATA[
-    public str getPageNameAux()
+    /// <summary>
+    /// Gets page name string from pass.
+    /// </summary>
+    /// <returns>page name string.</returns>
+    protected str getPageNameAux()
     {
         return pass.exists(#PageName) ? pass.lookupStr(#PageName) : '';
     }
@@ -479,7 +518,11 @@ final class WhsWorkExecuteDisplayAux_Extension
 			<Method>
 				<Name>setModelAux</Name>
 				<Source><![CDATA[
-    public void setModelAux(Object _model)
+    /// <summary>
+    /// Puts serialized model object to pass.
+    /// </summary>
+    /// <param name = "_model">model object.</param>
+    protected void setModelAux(Object _model)
     {
         str packedModel = FormJsonSerializer::serializeClass(_model);
 
@@ -496,24 +539,25 @@ final class WhsWorkExecuteDisplayAux_Extension
 			<Method>
 				<Name>getModelAux</Name>
 				<Source><![CDATA[
-    public Object getModelAux()
+    /// <summary>
+    /// Gets deserialized model object from pass.
+    /// </summary>
+    /// <returns>model object.</returns>
+    protected Object getModelAux()
     {
-        SysDictClass dictClass = new SysDictClass(classIdGet(this));
-        WHSRFModelReferenceAuxAttribute modelRefAttr = dictClass.getAttribute(classStr(WHSRFModelReferenceAuxAttribute)) as WHSRFModelReferenceAuxAttribute;
-
         Object model;
 
         str packedModel = pass.exists(#Model) ? pass.lookupStr(#Model) : '';
         
         if (packedModel == '')
         {
-            SysDictClass dictClassModel = new SysDictClass(modelRefAttr.parmClassId());
+            SysDictClass dictClassModel = new SysDictClass(className2Id(modelClassName));
 
             model = dictClassModel.makeObject();
         }
         else
         {
-            model = FormJsonSerializer::deserializeObject(modelRefAttr.parmClassId(), packedModel);
+            model = FormJsonSerializer::deserializeObject(className2Id(modelClassName), packedModel);
         }
 
         return model;
@@ -524,7 +568,13 @@ final class WhsWorkExecuteDisplayAux_Extension
 			<Method>
 				<Name>viewAux</Name>
 				<Source><![CDATA[
-    public container viewAux(Object _model, container _con)
+    /// <summary>
+    /// Main view method (MVU) which calls view method for current page by pageName + View.
+    /// </summary>
+    /// <param name = "_model">model object.</param>
+    /// <param name = "_con">WHSRF container.</param>
+    /// <returns>WHSRF form container.</returns>
+    protected container viewAux(Object _model, container _con)
     {
         container res = connull();
         container con = _con;
@@ -554,6 +604,20 @@ final class WhsWorkExecuteDisplayAux_Extension
         res = this.updateModeStepPass(res, mode, step, pass);
 
         return res;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>cancelClicked</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Handles cancel button click.
+    /// </summary>
+    protected void cancelClicked()
+    {
+        mode = WHSWorkExecuteMode::Menu;
+        step = 0;
     }
 
 ]]></Source>

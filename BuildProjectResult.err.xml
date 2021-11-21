@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Diagnostics
+  GenerationTime="2021-11-21T11:30:36.8677927+02:00">
+  <Items>
+    <Diagnostic>
+      <DiagnosticType>Compile</DiagnosticType>
+      <Severity>Error</Severity>
+      <Path>dynamics://Class/WhsWorkExecuteDisplayAux/Method/byContractUpdateModelByFieldAux</Path>
+      <ElementType>Class Method</ElementType>
+      <Moniker>IntrinsicArgInstanceMethodDoesNotExist</Moniker>
+      <Line>261</Line>
+      <Column>30</Column>
+      <EndLine>261</EndLine>
+      <EndColumn>99</EndColumn>
+      <Message>The instance method designated by argument 'byContractInvokeServiceMethodAux' does not exist.</Message>
+    </Diagnostic>
+  </Items>
+  <Aliases />
+</Diagnostics>

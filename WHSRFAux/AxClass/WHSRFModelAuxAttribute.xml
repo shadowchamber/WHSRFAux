@@ -3,6 +3,9 @@
 	<Name>WHSRFModelAuxAttribute</Name>
 	<SourceCode>
 		<Declaration><![CDATA[
+/// <summary>
+/// Model class attribute.
+/// </summary>
 public class WHSRFModelAuxAttribute extends SysAttribute
 {
     private str title;
@@ -13,6 +16,10 @@ public class WHSRFModelAuxAttribute extends SysAttribute
 			<Method>
 				<Name>new</Name>
 				<Source><![CDATA[
+    /// <summary>
+    /// Standard constructor.
+    /// </summary>
+    /// <param name = "_title">title string.</param>
     void new(str _title)
     {
         super();
@@ -23,17 +30,14 @@ public class WHSRFModelAuxAttribute extends SysAttribute
 ]]></Source>
 			</Method>
 			<Method>
-				<Name>parmTitle</Name>
+				<Name>title</Name>
 				<Source><![CDATA[
     /// <summary>
-    /// Standard parm method.
+    /// Gets title string.
     /// </summary>
-    /// <param name = "_title">Value to set.</param>
-    /// <returns>Return value.</returns>
-    public str parmTitle(str _title = title)
+    /// <returns>Title str.</returns>
+    public str title()
     {
-        title = _title;
-    
         return title;
     }
 

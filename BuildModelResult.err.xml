@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Diagnostics
+  GenerationTime="2021-11-21T02:28:39.5101388+02:00">
+  <Items>
+    <Diagnostic>
+      <DiagnosticType>Compile</DiagnosticType>
+      <Severity>Error</Severity>
+      <Path>dynamics://Class/WhsWorkExecuteDisplayAux/Method/byContractUpdateModelByFieldAux</Path>
+      <ElementType>Class Method</ElementType>
+      <Moniker>IntrinsicArgInstanceMethodDoesNotExist</Moniker>
+      <Line>260</Line>
+      <Column>30</Column>
+      <EndLine>260</EndLine>
+      <EndColumn>96</EndColumn>
+      <Message>The instance method designated by argument 'byContractInvokeServiceMethodAux' does not exist.</Message>
+    </Diagnostic>
+    <Diagnostic>
+      <DiagnosticType>Compile</DiagnosticType>
+      <Severity>Error</Severity>
+      <Path>dynamics://Class/WhsWorkExecuteDisplayAux/Method/byContractGenerateStandardEventMessagesAux</Path>
+      <ElementType>Class Method</ElementType>
+      <Moniker>IntrinsicArgInstanceMethodDoesNotExist</Moniker>
+      <Line>320</Line>
+      <Column>26</Column>
+      <EndLine>320</EndLine>
+      <EndColumn>91</EndColumn>
+      <Message>The instance method designated by argument 'byContractUpdateModelByFieldAux' does not exist.</Message>
+    </Diagnostic>
+    <Diagnostic>
+      <DiagnosticType>Compile</DiagnosticType>
+      <Severity>Error</Severity>
+      <Path>dynamics://Class/WhsWorkExecuteDisplayAux/Method/generateStandardEventMessagesAux</Path>
+      <ElementType>Class Method</ElementType>
+      <Moniker>IntrinsicArgInstanceMethodDoesNotExist</Moniker>
+      <Line>329</Line>
+      <Column>34</Column>
+      <EndLine>329</EndLine>
+      <EndColumn>85</EndColumn>
+      <Message>The instance method designated by argument 'byContractInitAux' does not exist.</Message>
+    </Diagnostic>
+  </Items>
+  <Aliases />
+</Diagnostics>

@@ -1,0 +1,8 @@
+﻿ERR001=AUXWHSRF001: Service method should have one parameter.
+ ;WHSRFAux
+ERR002=AUXWHSRF002: Object does not have such method %1
+ ;WHSRFAux
+ERR003=AUXWHSRF003: Wrong use of method
+ ;WHSRFAux
+ERR004=AUXWHSRF004: Service class does not have method %1
+ ;WHSRFAux

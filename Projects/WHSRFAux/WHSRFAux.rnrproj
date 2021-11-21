@@ -34,13 +34,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Classes\" />
+    <Folder Include="Label Files\" />
     <Folder Include="Macros\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AxClass\WHSRFMessageAuxAttribute">
+    <Content Include="AxClass\SysDictClassAux_Extension">
       <SubType>Content</SubType>
-      <Name>WHSRFMessageAuxAttribute</Name>
-      <Link>Classes\WHSRFMessageAuxAttribute</Link>
+      <Name>SysDictClassAux_Extension</Name>
+      <Link>Classes\SysDictClassAux_Extension</Link>
+    </Content>
+    <Content Include="AxClass\WHSRFDataServiceAuxAttribute">
+      <SubType>Content</SubType>
+      <Name>WHSRFDataServiceAuxAttribute</Name>
+      <Link>Classes\WHSRFDataServiceAuxAttribute</Link>
     </Content>
     <Content Include="AxClass\WHSRFModelAuxAttribute">
       <SubType>Content</SubType>
@@ -52,20 +58,25 @@
       <Name>WHSRFModelFieldAuxAttribute</Name>
       <Link>Classes\WHSRFModelFieldAuxAttribute</Link>
     </Content>
-    <Content Include="AxClass\WHSRFModelReferenceAuxAttribute">
+    <Content Include="AxClass\WhsWorkExecuteDisplayAux">
       <SubType>Content</SubType>
-      <Name>WHSRFModelReferenceAuxAttribute</Name>
-      <Link>Classes\WHSRFModelReferenceAuxAttribute</Link>
+      <Name>WhsWorkExecuteDisplayAux</Name>
+      <Link>Classes\WhsWorkExecuteDisplayAux</Link>
     </Content>
-    <Content Include="AxClass\WhsWorkExecuteDisplayAux_Extension">
+    <Content Include="AxLabelFile\WHSRFAux_en-US">
       <SubType>Content</SubType>
-      <Name>WhsWorkExecuteDisplayAux_Extension</Name>
-      <Link>Classes\WhsWorkExecuteDisplayAux_Extension</Link>
+      <Name>WHSRFAux_en-US</Name>
+      <Link>Label Files\WHSRFAux_en-US</Link>
     </Content>
     <Content Include="AxMacroDictionary\WHSRFAux">
       <SubType>Content</SubType>
       <Name>WHSRFAux</Name>
       <Link>Macros\WHSRFAux</Link>
+    </Content>
+    <Content Include="WHSRFAux.en-US.label.txt">
+      <SubType>Content</SubType>
+      <Name>WHSRFAux.en-US.label.txt</Name>
+      <DependentUpon>AxLabelFile\WHSRFAux_en-US</DependentUpon>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.Common.targets" />
