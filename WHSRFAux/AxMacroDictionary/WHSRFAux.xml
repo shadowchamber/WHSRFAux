@@ -8,6 +8,7 @@
 #define.MethodGenerateEventMessages('generateEventMessages')&#xD;
 #define.ReadFieldValue('readFieldValue')&#xD;
 #define.Aux('Aux')&#xD;
-#define.NewLine('\n')</Source>
+#define.NewLine('\n')&#xD;
+#define.Parm('parm')</Source>
 	<Macros />
 </AxMacroDictionary>

@@ -334,10 +334,14 @@ public class WhsWorkExecuteDisplayAux extends WhsWorkExecuteDisplay
         WHSRFModelFieldAuxAttribute fieldAttribute;
         SysDictMethod fieldMethodInfo = this.getCurrentFieldMethodInfoAux(_model);
 
+        if (fieldMethodInfo == null)
+        {
+            return _model;
+        }
+
         fieldAttribute = fieldMethodInfo.getAttribute(classStr(WHSRFModelFieldAuxAttribute)) as WHSRFModelFieldAuxAttribute;
 
-        if (fieldAttribute == null
-            || fieldMethodInfo == null)
+        if (fieldAttribute == null)
         {
             return _model;
         }
@@ -346,14 +350,51 @@ public class WhsWorkExecuteDisplayAux extends WhsWorkExecuteDisplay
 
         this.setPageNameAux(#ReadFieldValue);
 
-        step++;
-
-        fieldMethodInfo = this.getCurrentFieldMethodInfoAux(_model); // for checking if finished
-
-        if (fieldMethodInfo == null)
+        if (subStr(fieldMethodInfo.name(), 1, strLen(#Parm)) == #Parm)
         {
-            this.dispatchAux(methodStr(WhsWorkExecuteDisplayAux, invokeServiceMethodAux), _value);
+            str validateMethodName = 'validate' + subStr(fieldMethodInfo.name(), 1 + strLen(#Parm), strLen(fieldMethodInfo.name()) - strLen(#Parm));
+
+            if (dictClass.hasObjectMethod(validateMethodName))
+            {
+                boolean valid = dictClass.callObject(validateMethodName, _model);
+
+                if (!valid)
+                {
+                    throw Error('Value is not correct.');
+                }
+            }
         }
+
+        boolean visible = false;
+
+        while (!visible)
+        {
+            step++;
+
+            fieldMethodInfo = this.getCurrentFieldMethodInfoAux(_model); // for checking if finished
+        
+            if (fieldMethodInfo == null)
+            {
+                this.dispatchAux(methodStr(WhsWorkExecuteDisplayAux, invokeServiceMethodAux), _value);
+
+                return _model;
+            }
+
+            if (subStr(fieldMethodInfo.name(), 1, strLen(#Parm)) == #Parm)
+            {
+                str visibleMethodName = 'visible' + subStr(fieldMethodInfo.name(), 1 + strLen(#Parm), strLen(fieldMethodInfo.name()) - strLen(#Parm));
+
+                if (dictClass.hasObjectMethod(visibleMethodName))
+                {
+                    visible = dictClass.callObject(visibleMethodName, _model, pass.lookupStr(#MenuItem));
+                }
+                else
+                {
+                    visible = true;
+                }
+            }
+        }
+
 
         return _model;
     }
