@@ -1,18 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Diagnostics
-  GenerationTime="2021-11-21T11:30:36.8677927+02:00">
+  GenerationTime="2021-11-25T00:41:09.0545456+02:00">
   <Items>
     <Diagnostic>
       <DiagnosticType>Compile</DiagnosticType>
       <Severity>Error</Severity>
-      <Path>dynamics://Class/WhsWorkExecuteDisplayAux/Method/byContractUpdateModelByFieldAux</Path>
+      <Path>dynamics://Class/WhsWorkExecuteDisplayAux_Extension/Method/invokeServiceMethodAux</Path>
       <ElementType>Class Method</ElementType>
-      <Moniker>IntrinsicArgInstanceMethodDoesNotExist</Moniker>
-      <Line>261</Line>
-      <Column>30</Column>
-      <EndLine>261</EndLine>
-      <EndColumn>99</EndColumn>
-      <Message>The instance method designated by argument 'byContractInvokeServiceMethodAux' does not exist.</Message>
+      <Moniker>InvalidTypeNameAsQualifier</Moniker>
+      <Line>447</Line>
+      <Column>23</Column>
+      <EndLine>447</EndLine>
+      <EndColumn>32</EndColumn>
+      <Message>The qualifier 'dictClass' is not valid in this context. Use a variable of this type instead. </Message>
+    </Diagnostic>
+    <Diagnostic>
+      <DiagnosticType>Compile</DiagnosticType>
+      <Severity>Error</Severity>
+      <Path>dynamics://Class/WhsWorkExecuteDisplayAux_Extension/Method/invokeServiceMethodAux</Path>
+      <ElementType>Class Method</ElementType>
+      <Moniker>InvalidTypeNameAsQualifier</Moniker>
+      <Line>450</Line>
+      <Column>9</Column>
+      <EndLine>450</EndLine>
+      <EndColumn>19</EndColumn>
+      <Message>The qualifier 'dictClass' is not valid in this context. Use a variable of this type instead. </Message>
     </Diagnostic>
   </Items>
   <Aliases />

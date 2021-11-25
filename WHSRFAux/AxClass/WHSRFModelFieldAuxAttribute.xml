@@ -9,6 +9,7 @@
 public class WHSRFModelFieldAuxAttribute extends SysAttribute
 {
     private int step;
+    private str title;
 
 }
 ]]></Declaration>
@@ -20,11 +21,12 @@ public class WHSRFModelFieldAuxAttribute extends SysAttribute
     /// Standard constructor.
     /// </summary>
     /// <param name = "_step">number of step (int)</param>
-    void new(int _step)
+    void new(int _step, str _title = '')
     {
         super();
 
         step = _step;
+        title = _title;
     }
 
 ]]></Source>
@@ -39,6 +41,16 @@ public class WHSRFModelFieldAuxAttribute extends SysAttribute
     public int step()
     {
         return step;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>title</Name>
+				<Source><![CDATA[
+    public str title()
+    {
+        return title;
     }
 
 ]]></Source>

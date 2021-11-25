@@ -63,6 +63,11 @@
       <Name>WhsWorkExecuteDisplayAux</Name>
       <Link>Classes\WhsWorkExecuteDisplayAux</Link>
     </Content>
+    <Content Include="AxClass\WhsWorkExecuteDisplayAux_Extension">
+      <SubType>Content</SubType>
+      <Name>WhsWorkExecuteDisplayAux_Extension</Name>
+      <Link>Classes\WhsWorkExecuteDisplayAux_Extension</Link>
+    </Content>
     <Content Include="AxLabelFile\WHSRFAux_en-US">
       <SubType>Content</SubType>
       <Name>WHSRFAux_en-US</Name>

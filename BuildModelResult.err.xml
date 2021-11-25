@@ -1,42 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Diagnostics
-  GenerationTime="2021-11-21T02:28:39.5101388+02:00">
+  GenerationTime="2021-11-24T21:47:58.4199669+02:00">
   <Items>
     <Diagnostic>
       <DiagnosticType>Compile</DiagnosticType>
       <Severity>Error</Severity>
-      <Path>dynamics://Class/WhsWorkExecuteDisplayAux/Method/byContractUpdateModelByFieldAux</Path>
+      <Path>dynamics://Class/WhsWorkExecuteDisplayAux_Extension/Method/cancelClicked</Path>
       <ElementType>Class Method</ElementType>
-      <Moniker>IntrinsicArgInstanceMethodDoesNotExist</Moniker>
-      <Line>260</Line>
-      <Column>30</Column>
-      <EndLine>260</EndLine>
-      <EndColumn>96</EndColumn>
-      <Message>The instance method designated by argument 'byContractInvokeServiceMethodAux' does not exist.</Message>
+      <Moniker>ChainOfCommandNextCallMustExist</Moniker>
+      <Line>696</Line>
+      <Column>5</Column>
+      <EndLine>696</EndLine>
+      <EndColumn>33</EndColumn>
+      <Message>Chain of command method must contain one next call.</Message>
     </Diagnostic>
     <Diagnostic>
       <DiagnosticType>Compile</DiagnosticType>
       <Severity>Error</Severity>
-      <Path>dynamics://Class/WhsWorkExecuteDisplayAux/Method/byContractGenerateStandardEventMessagesAux</Path>
+      <Path>dynamics://Class/WhsWorkExecuteDisplayAux/Method/displayForm</Path>
       <ElementType>Class Method</ElementType>
-      <Moniker>IntrinsicArgInstanceMethodDoesNotExist</Moniker>
-      <Line>320</Line>
-      <Column>26</Column>
-      <EndLine>320</EndLine>
-      <EndColumn>91</EndColumn>
-      <Message>The instance method designated by argument 'byContractUpdateModelByFieldAux' does not exist.</Message>
-    </Diagnostic>
-    <Diagnostic>
-      <DiagnosticType>Compile</DiagnosticType>
-      <Severity>Error</Severity>
-      <Path>dynamics://Class/WhsWorkExecuteDisplayAux/Method/generateStandardEventMessagesAux</Path>
-      <ElementType>Class Method</ElementType>
-      <Moniker>IntrinsicArgInstanceMethodDoesNotExist</Moniker>
-      <Line>329</Line>
-      <Column>34</Column>
-      <EndLine>329</EndLine>
-      <EndColumn>85</EndColumn>
-      <Message>The instance method designated by argument 'byContractInitAux' does not exist.</Message>
+      <Moniker>NotAllPathsReturn</Moniker>
+      <Line>6</Line>
+      <Column>5</Column>
+      <EndLine>11</EndLine>
+      <EndColumn>6</EndColumn>
+      <Message>Not all paths return a value in 'displayForm'.</Message>
     </Diagnostic>
   </Items>
   <Aliases />

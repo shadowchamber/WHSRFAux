@@ -20,7 +20,7 @@ public class WHSRFModelAuxAttribute extends SysAttribute
     /// Standard constructor.
     /// </summary>
     /// <param name = "_title">title string.</param>
-    void new(str _title)
+    void new(str _title = '')
     {
         super();
 
