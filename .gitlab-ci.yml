@@ -1,0 +1,8 @@
+stages:
+  - syncout
+
+sync:
+  stage: syncout
+  trigger:
+    project: d365/recoded/WHSRFAux/ci
+    branch: sync/out/all
