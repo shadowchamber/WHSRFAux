@@ -4,5 +4,5 @@ stages:
 sync:
   stage: syncout
   trigger:
-    project: d365/recoded/WHSRFAux/ci
-    branch: sync/out/github
+    project: recoded/whsrfaux/ci/sync/github/out
+    branch: main
