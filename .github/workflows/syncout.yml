@@ -27,6 +27,6 @@ jobs:
       - name: Sync
         run: |
           export
-          git clone --bare $internal_repository
+          git clone --bare ${{ secrets.INTERNAL_REPOSITORY }} 
           cd WHSRFAux.git
-          git push --mirror $external_repository
+          git push --mirror ${{ secrets.EXTERNAL_REPOSITORY }}
