@@ -1,4 +1,4 @@
-# WHSRF Auxiliary
+# WHSRF Auxiliary - Microsoft Dynamics 365 for Finance and Operations Warehouse Mobile Device Auxiliary Module
 
 [![Discord Chat](https://img.shields.io/discord/938559793935835217?label=Discord&logo=Discord)](https://discord.gg/JY9u87R7)
 [![Licensed under the LGPL License](https://img.shields.io/badge/license-lgpl__2__1-blue)](https://github.com/shadowchamber/WHSRFAux/blob/master/LICENSE)
