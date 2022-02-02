@@ -8,11 +8,11 @@ WHSRF Auxiliary is Extension (Module) for Microsoft Dynamics 365 for finance and
 
 ## Documentation
 
-* [WHSRF Architecture](https://github.com/chakra-core/ChakraCore/wiki/Architecture-Overview)
-* [Quickstart Guide](https://github.com/chakra-core/ChakraCore/wiki/Embedding-ChakraCore)
-* [API Reference](https://github.com/chakra-core/ChakraCore/wiki/JavaScript-Runtime-%28JSRT%29-Reference)
+* [WHSRF Architecture](https://github.com/shadowchamber/WHSRFAux/wiki/Architecture-Overview)
+* [Quickstart Guide](https://github.com/shadowchamber/WHSRFAux/wiki/Embedding-ChakraCore)
+* [API Reference](https://github.com/shadowchamber/WHSRFAux/wiki/JavaScript-Runtime-%28JSRT%29-Reference)
 * [Contribution guidelines](CONTRIBUTING.md)
-* [Blogs, talks and other resources](https://github.com/chakra-core/ChakraCore/wiki/Resources)
+* [Blogs, talks and other resources](https://github.com/shadowchamber/WHSRFAux/wiki/Resources)
 
 ## Contribute
 
@@ -25,7 +25,7 @@ Please refer to [Contribution Guidelines](CONTRIBUTING.md) for more details.
 
 ## License
 
-Code licensed under the [MIT License](https://github.com/chakra-core/ChakraCore/blob/master/LICENSE.txt).
+Code licensed under the [MIT License](https://github.com/shadowchamber/WHSRFAux/blob/master/LICENSE).
 
 ## Contact Us
 
