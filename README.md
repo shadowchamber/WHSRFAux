@@ -8,7 +8,7 @@ WHSRF Auxiliary is Extension (Module) for Microsoft Dynamics 365 for finance and
 
 ## Documentation
 
-* [WHSRF Architecture](https://github.com/shadowchamber/WHSRFAux/wiki/Architecture-Overview)
+* [Architecture](https://github.com/shadowchamber/WHSRFAux/wiki/Architecture-Overview)
 * [Quickstart Guide](https://github.com/shadowchamber/WHSRFAux/wiki/Embedding-ChakraCore)
 * [API Reference](https://github.com/shadowchamber/WHSRFAux/wiki/JavaScript-Runtime-%28JSRT%29-Reference)
 * [Contribution guidelines](CONTRIBUTING.md)
