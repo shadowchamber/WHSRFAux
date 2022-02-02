@@ -23,3 +23,10 @@ If you want to learn more about creating good readme files then refer the follow
 - [ASP.NET Core](https://github.com/aspnet/Home)
 - [Visual Studio Code](https://github.com/Microsoft/vscode)
 - [Chakra Core](https://github.com/Microsoft/ChakraCore)
+
+## Contact Us
+
+If you have questions about WHSRF, or you would like to reach out to us about an issue you're having or for development advice as you work on a WHSRF issue, you can reach us as follows:
+
+* Open an [issue](https://github.com/shadowchamber/WHSRFAux/issues/new)
+* Discuss WHSRF with the team and the community via the Discord link above
