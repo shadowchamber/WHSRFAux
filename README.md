@@ -4,7 +4,7 @@
 [![Licensed under the LGPL License](https://img.shields.io/badge/license-lgpl__2__1-blue)](https://github.com/shadowchamber/WHSRFAux/blob/master/LICENSE)
 [![PR's Welcome](https://img.shields.io/badge/PRs%20-welcome-brightgreen.svg)](#contribute)
 
-WHSRF Auxiliary is Extension (Module) for Microsoft Dynamics 365 for finance and operations to be able to develop WHS Mobile device processes faster and easier than standard WHSWorkExecute or Process Guide Framework. The main goal is to allow to use Data Contract and Service classes to implement new functionality instead of manually creation of the mobile device UI.
+WHSRF Auxiliary is Extension (ISV Module) for Microsoft Dynamics 365 for finance and operations to be able to develop WHS Mobile device processes faster and easier than standard WHSWorkExecute or Process Guide Framework. The main goal is to allow to use Data Contract and Service classes to implement new functionality instead of manually creation of the mobile device UI.
 
 ## Documentation
 
