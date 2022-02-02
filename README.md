@@ -1,4 +1,7 @@
 # WHSRF Auxiliary
+
+[![Discord Chat](https://img.shields.io/discord/695166668967510077?label=Discord&logo=Discord)](https://discord.gg/JY9u87R7)
+
 Extension for Dynamics 365 for finance and operations to be able to develop WHS Mobile device processes faster and easier than standard WHSWorkExecute or Process Guide Framework.
 
 # Getting Started
