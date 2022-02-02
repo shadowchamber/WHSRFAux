@@ -4,17 +4,15 @@
 [![Licensed under the LGPL License](https://img.shields.io/badge/license-lgpl__2__1-blue)](https://github.com/shadowchamber/WHSRFAux/blob/master/LICENSE)
 [![PR's Welcome](https://img.shields.io/badge/PRs%20-welcome-brightgreen.svg)](#contribute)
 
-Extension for Dynamics 365 for finance and operations to be able to develop WHS Mobile device processes faster and easier than standard WHSWorkExecute or Process Guide Framework.
+WHSRF Auxiliary is Extension (Module) for Microsoft Dynamics 365 for finance and operations to be able to develop WHS Mobile device processes faster and easier than standard WHSWorkExecute or Process Guide Framework. The main goal is to use Data Contract and Service classes to implement new functionality instead of manually creation of the mobile device UI.
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	[Installation process](https://github.com/shadowchamber/WHSRFAux/wiki/Installation-process)
-2.	Software dependencies
-3.	Latest releases
-4.	API references.
+## Documentation
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+* [WHSRF Architecture](https://github.com/chakra-core/ChakraCore/wiki/Architecture-Overview)
+* [Quickstart Guide](https://github.com/chakra-core/ChakraCore/wiki/Embedding-ChakraCore)
+* [API Reference](https://github.com/chakra-core/ChakraCore/wiki/JavaScript-Runtime-%28JSRT%29-Reference)
+* [Contribution guidelines](CONTRIBUTING.md)
+* [Blogs, talks and other resources](https://github.com/chakra-core/ChakraCore/wiki/Resources)
 
 ## Contribute
 
