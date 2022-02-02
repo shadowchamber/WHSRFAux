@@ -25,7 +25,7 @@ Please refer to [Contribution Guidelines](CONTRIBUTING.md) for more details.
 
 ## License
 
-Code licensed under the [MIT License](https://github.com/shadowchamber/WHSRFAux/blob/master/LICENSE).
+Code licensed under the [GNU Lesser General Public License v2.1](https://github.com/shadowchamber/WHSRFAux/blob/master/LICENSE).
 
 ## Contact Us
 
