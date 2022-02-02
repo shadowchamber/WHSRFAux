@@ -24,6 +24,19 @@ If you want to learn more about creating good readme files then refer the follow
 - [Visual Studio Code](https://github.com/Microsoft/vscode)
 - [Chakra Core](https://github.com/Microsoft/ChakraCore)
 
+## Contribute
+
+Contributions to WHSRF are welcome.  Here is how you can contribute to WHSRF:
+
+* [Submit bugs](https://github.com/shadowchamber/WHSRFAux/issues) and help us verify fixes.
+* [Submit pull requests](https://github.com/shadowchamber/WHSRFAux/pulls) for bug fixes and features and discuss existing proposals
+
+Please refer to [Contribution Guidelines](CONTRIBUTING.md) for more details.
+
+## License
+
+Code licensed under the [MIT License](https://github.com/chakra-core/ChakraCore/blob/master/LICENSE.txt).
+
 ## Contact Us
 
 If you have questions about WHSRF, or you would like to reach out to us about an issue you're having or for development advice as you work on a WHSRF issue, you can reach us as follows:
