@@ -2,7 +2,7 @@
 
 [![Discord Chat](https://img.shields.io/discord/938559793935835217?label=Discord&logo=Discord)](https://discord.gg/JY9u87R7)
 [![Licensed under the LGPL License](https://img.shields.io/badge/license-lgpl__2__1-blue)](https://github.com/shadowchamber/WHSRFAux/blob/master/LICENSE)
-
+[![PR's Welcome](https://img.shields.io/badge/PRs%20-welcome-brightgreen.svg)](#contribute)
 
 Extension for Dynamics 365 for finance and operations to be able to develop WHS Mobile device processes faster and easier than standard WHSWorkExecute or Process Guide Framework.
 
