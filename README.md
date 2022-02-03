@@ -8,7 +8,7 @@ WHSRF Auxiliary is Extension (ISV Module) for Microsoft Dynamics 365 for finance
 
 ## Documentation
 
-* [Quickstart Guide](https://github.com/shadowchamber/WHSRFAux/wiki/QuickStartGuide)
+* [Quickstart Guide](https://github.com/shadowchamber/WHSRFAux/wiki/Quick-Start-Guide)
 * [Contribution guidelines](CONTRIBUTING.md)
 
 ## Contribute
