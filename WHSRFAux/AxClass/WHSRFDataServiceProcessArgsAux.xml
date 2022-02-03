@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>WHSRFDataServiceProcessArgsAux</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+public class WHSRFDataServiceProcessArgsAux
+{
+    private boolean reset;
+    private WHSUserId userId;
+
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>parmReset</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Standard parm method.
+    /// </summary>
+    /// <param name = "_reset">Value to set.</param>
+    /// <returns>Return value.</returns>
+    public boolean parmReset(boolean _reset = reset)
+    {
+        reset = _reset;
+    
+        return reset;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>parmUserId</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Standard parm method.
+    /// </summary>
+    /// <param name = "_userId">Value to set.</param>
+    /// <returns>Return value.</returns>
+    public WHSUserId parmUserId(WHSUserId _userId = userId)
+    {
+        userId = _userId;
+    
+        return userId;
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>
