@@ -30,6 +30,12 @@ final class WhsWorkExecuteDisplayAux_Extension
 			<Method>
 				<Name>displayFormAux</Name>
 				<Source><![CDATA[
+    /// <summary>
+    /// Main display form method. Entry point.
+    /// </summary>
+    /// <param name = "_con">state container.</param>
+    /// <param name = "_extraText">extra text str.</param>
+    /// <returns>updated state container.</returns>
     public container displayFormAux(
         container   _con,
         str         _extraText = '')
@@ -42,7 +48,7 @@ final class WhsWorkExecuteDisplayAux_Extension
         
         Object model = this.getModelAux();
 
-        this.generateEventMessagesAux(model);
+        this.generateEventMessagesAux(model, _extraText);
 
         model = this.processMessagesAux(model);
 
@@ -52,9 +58,13 @@ final class WhsWorkExecuteDisplayAux_Extension
 ]]></Source>
 			</Method>
 			<Method>
-				<Name>dictClass</Name>
+				<Name>dictClassAux</Name>
 				<Source><![CDATA[
-    public SysDictClass dictClass()
+    /// <summary>
+    /// Returns dict class for this object.
+    /// </summary>
+    /// <returns>SysDictClass.</returns>
+    public SysDictClass dictClassAux()
     {
         if (thisDictClass == null)
         {
@@ -67,13 +77,17 @@ final class WhsWorkExecuteDisplayAux_Extension
 ]]></Source>
 			</Method>
 			<Method>
-				<Name>serviceDictMethod</Name>
+				<Name>serviceDictMethodAux</Name>
 				<Source><![CDATA[
-    public SysDictMethod serviceDictMethod()
+    /// <summary>
+    /// Returns dict method for service method.
+    /// </summary>
+    /// <returns>SysDictMethod.</returns>
+    public SysDictMethod serviceDictMethodAux()
     {
         if (thisServiceDictMethod == null)
         {
-            thisServiceDictMethod = this.serviceDictClass().getMethod(serviceMethodName);
+            thisServiceDictMethod = this.serviceDictClassAux().getMethod(serviceMethodName);
         }
 
         return thisServiceDictMethod;
@@ -82,19 +96,23 @@ final class WhsWorkExecuteDisplayAux_Extension
 ]]></Source>
 			</Method>
 			<Method>
-				<Name>serviceDictClass</Name>
+				<Name>serviceDictClassAux</Name>
 				<Source><![CDATA[
-    public SysDictClass serviceDictClass()
+    /// <summary>
+    /// Returns service dict class.
+    /// </summary>
+    /// <returns>SysDictClass.</returns>
+    public SysDictClass serviceDictClassAux()
     {
         if (thisServiceDictClass == null)
         { 
             if (serviceClassName == '')
             {
-                WHSRFDataServiceAuxAttribute serviceAttribute = this.dictClass().getAttribute(classStr(WHSRFDataServiceAuxAttribute)) as WHSRFDataServiceAuxAttribute;
+                WHSRFDataServiceAuxAttribute serviceAttribute = this.dictClassAux().getAttribute(classStr(WHSRFDataServiceAuxAttribute)) as WHSRFDataServiceAuxAttribute;
 
                 if (serviceAttribute == null)
                 {
-                    serviceClassName = this.dictClass().name();
+                    serviceClassName = this.dictClassAux().name();
                     serviceMethodName = 'process';
                 }
                 else
@@ -116,18 +134,22 @@ final class WhsWorkExecuteDisplayAux_Extension
 ]]></Source>
 			</Method>
 			<Method>
-				<Name>modelClassName</Name>
+				<Name>modelClassNameAux</Name>
 				<Source><![CDATA[
-    public str modelClassName()
+    /// <summary>
+    /// returns model class name.
+    /// </summary>
+    /// <returns>class name str.</returns>
+    public str modelClassNameAux()
     {
         if (modelClassName == '')
         {
-            if (this.serviceDictMethod().parameterCnt() != 1)
+            if (this.serviceDictMethodAux().parameterCnt() != 2)
             {
                 throw Error("@WHSRFAux:ERR001");
             }
 
-            modelClassName = this.serviceDictMethod().parameterTypeName(1);
+            modelClassName = this.serviceDictMethodAux().parameterTypeName(1);
         }
 
         return modelClassName;
@@ -136,23 +158,31 @@ final class WhsWorkExecuteDisplayAux_Extension
 ]]></Source>
 			</Method>
 			<Method>
-				<Name>modelClassId</Name>
+				<Name>modelClassIdAux</Name>
 				<Source><![CDATA[
-    public ClassId modelClassId()
+    /// <summary>
+    /// Returns class id for model class.
+    /// </summary>
+    /// <returns>ClassId of model class.</returns>
+    public ClassId modelClassIdAux()
     {
-        return className2Id(this.modelClassName());
+        return className2Id(this.modelClassNameAux());
     }
 
 ]]></Source>
 			</Method>
 			<Method>
-				<Name>modelDictClass</Name>
+				<Name>modelDictClassAux</Name>
 				<Source><![CDATA[
-    public SysDictClass modelDictClass()
+    /// <summary>
+    /// Returns SysDictClass of model.
+    /// </summary>
+    /// <returns>SysDictClass of model.</returns>
+    public SysDictClass modelDictClassAux()
     {
         if (thisModelDictClass == null)
         {
-            thisModelDictClass = new SysDictClass(this.modelClassId());
+            thisModelDictClass = new SysDictClass(this.modelClassIdAux());
         }
 
         return thisModelDictClass;
@@ -304,75 +334,204 @@ final class WhsWorkExecuteDisplayAux_Extension
         str typeName = fieldMethodInfo.returnTypeName();
         
         ExtendedTypeId extTypeId = extendedTypeName2Id(typeName);
-
-        WHSRFModelAuxAttribute modelAttribute = dictClass.getAttribute(classStr(WHSRFModelAuxAttribute)) as WHSRFModelAuxAttribute;
-
+        EnumId enumId = enumName2Id(typeName);
+        
+        WHSRFModelAuxAttribute modelAttribute = dictClass.getAttribute(classStr(WHSRFModelAuxAttribute)) as WHSRFModelAuxAttribute;        
         anytype value = dictClass.callObject(fieldMethodInfo.name(), _model);
 
-        SysDictType dictType = new SysDictType(extTypeId);
-
         str labelFieldName = fieldMethodInfo.name() + 'Label';
-        str textFieldName = fieldMethodInfo.name() + 'Text';
 
         str helpText = fieldAttribute.title();
-
-        if (helpText == '')
-        {
-            helpText = dictType.help();
-        }
-
-        if (helpText == '')
-        {
-            helpText = modelAttribute.title();
-        }
- 
-        ret += [this.buildControl(#RFLabel, labelFieldName, helpText, 1, '', #WHSRFUndefinedDataType, '', 0)];
-
-        ret = this.addEnteredValues(ret, _model);
-
-        // show infolog
-        SysInfologEnumerator sysInfologEnumerator = SysInfologEnumerator::newData(infolog.infologData());
-        int i = 1;
-
-        while (sysInfologEnumerator.moveNext())
-        {
-            SysInfologMessageStruct infoMessageStruct = SysInfologMessageStruct::construct(sysInfologEnumerator.currentMessage());
-
-            ret += [this.buildControl(#RFLabel, strFmt('Infolog%1', i), infoMessageStruct.message(), 1, '', #WHSRFUndefinedDataType, '', 0)];
-
-            i++;
-        }
-
-        str customBuildFieldMethodName = '';
-
-        if (subStr(fieldMethodInfo.name(), 1, strLen(#Parm)) == #Parm)
-        {
-            customBuildFieldMethodName = 'buildField' + subStr(fieldMethodInfo.name(), 1 + strLen(#Parm), strLen(fieldMethodInfo.name()) - strLen(#Parm));
-        }
-
-        // show field
-        if (customBuildFieldMethodName != ''
-            && this.dictClass().hasObjectMethod(customBuildFieldMethodName))
-        {
-            ret += this.dictClass().callObject(customBuildFieldMethodName, this, _model);
-        }
-        else if (this.dictClass().hasObjectMethod('buildEDTField' + dictType.name()))
-        {
-            ret += this.dictClass().callObject('buildEDTField' + dictType.name(), _model);
-        }
-        else
-        {
-            switch (dictType.baseType())
-            {
-                case Types::Date:
-                    ret += [this.buildControl(#RFText, textFieldName, dictType.label(), 1, strFmt('%1', value), extTypeId, '', 0)];
-                default:
-                    ret += [this.buildControl(#RFText, textFieldName, dictType.label(), 1, strFmt('%1', value), extTypeId, '', 0)];
-            }
-        }
         
-        ret += [this.buildControl(#RFButton, #RFOK, "@SYS5473", 1, '', #WHSRFUndefinedDataType, '', 1)];
-        ret += [this.buildControl(#RFButton, #RFCancel, "@SYS50163", 1, '', #WHSRFUndefinedDataType, '', 0)];
+        // call info method if exists
+        str infoMethodName = 'info' + subStr(fieldMethodInfo.name(), 1 + strLen(#Parm), strLen(fieldMethodInfo.name()) - strLen(#Parm));
+
+        if (this.dictClassAux().hasObjectMethod(infoMethodName))
+        {
+            this.dictClassAux().callObject(infoMethodName, this, _model);
+        }
+
+        if (enumId != 0
+            && typeName == enumStr(NoYes))
+        {
+            SysDictEnum dictEnum = new SysDictEnum(enumId);
+
+            if (helpText == '')
+            {
+                helpText = dictEnum.help();
+            }
+
+            if (helpText == '')
+            {
+                helpText = modelAttribute.title();
+            }
+ 
+            ret += [this.buildControl(#RFLabel, labelFieldName, helpText, 1, '', #WHSRFUndefinedDataType, '', 0)];
+
+            ret = this.addEnteredValuesAux(ret, _model);
+
+            // show infolog
+            SysInfologEnumerator sysInfologEnumerator = SysInfologEnumerator::newData(infolog.infologData());
+            int i = 1;
+
+            while (sysInfologEnumerator.moveNext())
+            {
+                SysInfologMessageStruct infoMessageStruct = SysInfologMessageStruct::construct(sysInfologEnumerator.currentMessage());
+
+                ret += [this.buildControl(#RFLabel, strFmt('Infolog%1', i), infoMessageStruct.message(), 1, '', #WHSRFUndefinedDataType, '', 0)];
+
+                i++;
+            }
+
+            str customBuildFieldMethodName = '';
+
+            if (subStr(fieldMethodInfo.name(), 1, strLen(#Parm)) == #Parm)
+            {
+                customBuildFieldMethodName = 'buildField' + subStr(fieldMethodInfo.name(), 1 + strLen(#Parm), strLen(fieldMethodInfo.name()) - strLen(#Parm));
+            }
+
+            // show field
+            if (customBuildFieldMethodName != ''
+            && this.dictClassAux().hasObjectMethod(customBuildFieldMethodName))
+            {
+                ret += this.dictClassAux().callObject(customBuildFieldMethodName, this, _model);
+            }
+            else if (this.dictClassAux().hasObjectMethod('buildEDTField' + dictEnum.name()))
+            {
+                ret += this.dictClassAux().callObject('buildEDTField' + dictEnum.name(), _model);
+            }
+            else
+            {
+                str textFieldName = fieldMethodInfo.name() + 'Text';
+
+                //ret += [this.buildControl(#RFText, textFieldName, dictEnum.label(), 1, strFmt('%1', value), extTypeId, '', 0)];
+            }
+        
+            ret += [this.buildControl(#RFButton, 'YesButton', "Yes", 1, '', #WHSRFUndefinedDataType, '', 1)];
+            ret += [this.buildControl(#RFButton, 'NoButton', "No", 1, '', #WHSRFUndefinedDataType, '', 0)];
+        }
+        else if (enumId != 0)
+        {
+            SysDictEnum dictEnum = new SysDictEnum(enumId);
+
+            if (helpText == '')
+            {
+                helpText = dictEnum.help();
+            }
+
+            if (helpText == '')
+            {
+                helpText = modelAttribute.title();
+            }
+ 
+            ret += [this.buildControl(#RFLabel, labelFieldName, helpText, 1, '', #WHSRFUndefinedDataType, '', 0)];
+
+            ret = this.addEnteredValuesAux(ret, _model);
+
+            // show infolog
+            SysInfologEnumerator sysInfologEnumerator = SysInfologEnumerator::newData(infolog.infologData());
+            int i = 1;
+
+            while (sysInfologEnumerator.moveNext())
+            {
+                SysInfologMessageStruct infoMessageStruct = SysInfologMessageStruct::construct(sysInfologEnumerator.currentMessage());
+
+                ret += [this.buildControl(#RFLabel, strFmt('Infolog%1', i), infoMessageStruct.message(), 1, '', #WHSRFUndefinedDataType, '', 0)];
+
+                i++;
+            }
+
+            str customBuildFieldMethodName = '';
+
+            if (subStr(fieldMethodInfo.name(), 1, strLen(#Parm)) == #Parm)
+            {
+                customBuildFieldMethodName = 'buildField' + subStr(fieldMethodInfo.name(), 1 + strLen(#Parm), strLen(fieldMethodInfo.name()) - strLen(#Parm));
+            }
+
+            // show field
+            if (customBuildFieldMethodName != ''
+            && this.dictClassAux().hasObjectMethod(customBuildFieldMethodName))
+            {
+                ret += this.dictClassAux().callObject(customBuildFieldMethodName, this, _model);
+            }
+            else if (this.dictClassAux().hasObjectMethod('buildEDTField' + dictEnum.name()))
+            {
+                ret += this.dictClassAux().callObject('buildEDTField' + dictEnum.name(), _model);
+            }
+            else
+            {
+                str textFieldName = fieldMethodInfo.name() + 'Text';
+
+                ret += [this.buildControl(#RFText, textFieldName, dictEnum.label(), 1, strFmt('%1', value), extTypeId, '', 0)]; 
+            }
+        
+            ret += [this.buildControl(#RFButton, #RFOK, "@SYS5473", 1, '', #WHSRFUndefinedDataType, '', 1)];
+            ret += [this.buildControl(#RFButton, #RFCancel, "@SYS50163", 1, '', #WHSRFUndefinedDataType, '', 0)];
+        }
+        else if (extTypeId != 0)
+        {
+            SysDictType dictType = new SysDictType(extTypeId);
+
+            str textFieldName = fieldMethodInfo.name() + 'Text';
+
+            if (helpText == '')
+            {
+                helpText = dictType.help();
+            }
+
+            if (helpText == '')
+            {
+                helpText = modelAttribute.title();
+            }
+ 
+            ret += [this.buildControl(#RFLabel, labelFieldName, helpText, 1, '', #WHSRFUndefinedDataType, '', 0)];
+
+            ret = this.addEnteredValuesAux(ret, _model);
+
+            // show infolog
+            SysInfologEnumerator sysInfologEnumerator = SysInfologEnumerator::newData(infolog.infologData());
+            int i = 1;
+
+            while (sysInfologEnumerator.moveNext())
+            {
+                SysInfologMessageStruct infoMessageStruct = SysInfologMessageStruct::construct(sysInfologEnumerator.currentMessage());
+
+                ret += [this.buildControl(#RFLabel, strFmt('Infolog%1', i), infoMessageStruct.message(), 1, '', #WHSRFUndefinedDataType, '', 0)];
+
+                i++;
+            }
+
+            str customBuildFieldMethodName = '';
+
+            if (subStr(fieldMethodInfo.name(), 1, strLen(#Parm)) == #Parm)
+            {
+                customBuildFieldMethodName = 'buildField' + subStr(fieldMethodInfo.name(), 1 + strLen(#Parm), strLen(fieldMethodInfo.name()) - strLen(#Parm));
+            }
+
+            // show field
+            if (customBuildFieldMethodName != ''
+            && this.dictClassAux().hasObjectMethod(customBuildFieldMethodName))
+            {
+                ret += this.dictClassAux().callObject(customBuildFieldMethodName, this, _model);
+            }
+            else if (this.dictClassAux().hasObjectMethod('buildEDTField' + dictType.name()))
+            {
+                ret += this.dictClassAux().callObject('buildEDTField' + dictType.name(), _model);
+            }
+            else
+            {
+                switch (dictType.baseType())
+                {
+                    case Types::Date:
+                        ret += [this.buildControl(#RFText, textFieldName, dictType.label(), 1, strFmt('%1', value), extTypeId, '', 0)];
+                    default:
+                        ret += [this.buildControl(#RFText, textFieldName, dictType.label(), 1, strFmt('%1', value), extTypeId, '', 0)];
+                }
+            }
+        
+            ret += [this.buildControl(#RFButton, #RFOK, "@SYS5473", 1, '', #WHSRFUndefinedDataType, '', 1)];
+            ret += [this.buildControl(#RFButton, #RFCancel, "@SYS50163", 1, '', #WHSRFUndefinedDataType, '', 0)];
+        }
  
         return ret;
     }
@@ -380,9 +539,15 @@ final class WhsWorkExecuteDisplayAux_Extension
 ]]></Source>
 			</Method>
 			<Method>
-				<Name>addEnteredValues</Name>
+				<Name>addEnteredValuesAux</Name>
 				<Source><![CDATA[
-    public container addEnteredValues(container _con, Object _model)
+    /// <summary>
+    /// Adds entered values to see current model values on form.
+    /// </summary>
+    /// <param name = "_con">state container.</param>
+    /// <param name = "_model">model object.</param>
+    /// <returns>status container with added info controls.</returns>
+    public container addEnteredValuesAux(container _con, Object _model)
     {
         container ret = _con;
         SysDictClass dictClass = new SysDictClass(classIdGet(_model));
@@ -456,13 +621,13 @@ final class WhsWorkExecuteDisplayAux_Extension
 ]]></Source>
 			</Method>
 			<Method>
-				<Name>getUserIdFromPass</Name>
+				<Name>getUserIdFromPassAux</Name>
 				<Source><![CDATA[
     /// <summary>
     /// Gets userid from pass;
     /// </summary>
     /// <returns>UserId value.</returns>
-    public UserId getUserIdFromPass()
+    public UserId getUserIdFromPassAux()
     {
         return pass.lookup(#UserId);
     }
@@ -517,7 +682,7 @@ final class WhsWorkExecuteDisplayAux_Extension
     /// <returns>model object.</returns>
     public Object invokeServiceMethodAux(Object _model)
     {
-        if (!this.serviceDictClass().hasObjectMethod(serviceMethodName))
+        if (!this.serviceDictClassAux().hasObjectMethod(serviceMethodName))
         {
             throw Error(strFmt("@WHSRFAux:ERR004", serviceMethodName));
         }
@@ -530,14 +695,27 @@ final class WhsWorkExecuteDisplayAux_Extension
         }
         else
         {
-            service = this.serviceDictClass().makeObject();
+            service = this.serviceDictClassAux().makeObject();
         }
 
-        this.serviceDictClass().callObject(serviceMethodName, service, _model);
+        WHSRFDataServiceProcessArgsAux args = new WHSRFDataServiceProcessArgsAux();
 
-        this.setPageNameAux('done');
+        args.parmUserId(this.userId);
 
-        step = 0;
+        this.serviceDictClassAux().callObject(serviceMethodName, service, _model, args);
+
+        if (args.parmReset())
+        {
+            this.dispatchInitAux();
+
+            step = 1;
+        }
+        else
+        {
+            this.setPageNameAux('done');
+
+            step = 0;
+        }
 
         return _model;
     }
@@ -570,7 +748,7 @@ final class WhsWorkExecuteDisplayAux_Extension
             return _model;
         }
 
-        this.modelDictClass().callObject(fieldMethodInfo.name(), _model, _value);
+        this.modelDictClassAux().callObject(fieldMethodInfo.name(), _model, _value);
 
         this.setPageNameAux(#ReadFieldValue);
 
@@ -578,9 +756,9 @@ final class WhsWorkExecuteDisplayAux_Extension
         {
             str validateMethodName = 'validate' + subStr(fieldMethodInfo.name(), 1 + strLen(#Parm), strLen(fieldMethodInfo.name()) - strLen(#Parm));
 
-            if (this.modelDictClass().hasObjectMethod(validateMethodName))
+            if (this.modelDictClassAux().hasObjectMethod(validateMethodName))
             {
-                boolean valid = this.modelDictClass().callObject(validateMethodName, _model);
+                boolean valid = this.modelDictClassAux().callObject(validateMethodName, _model);
 
                 if (!valid)
                 {
@@ -608,9 +786,9 @@ final class WhsWorkExecuteDisplayAux_Extension
             {
                 str visibleMethodName = 'visible' + subStr(fieldMethodInfo.name(), 1 + strLen(#Parm), strLen(fieldMethodInfo.name()) - strLen(#Parm));
 
-                if (this.dictClass().hasObjectMethod(visibleMethodName))
+                if (this.dictClassAux().hasObjectMethod(visibleMethodName))
                 {
-                    visible = this.dictClass().callObject(visibleMethodName, this, _model);
+                    visible = this.dictClassAux().callObject(visibleMethodName, this, _model);
                 }
                 else
                 {
@@ -618,7 +796,6 @@ final class WhsWorkExecuteDisplayAux_Extension
                 }
             }
         }
-
 
         return _model;
     }
@@ -643,9 +820,15 @@ final class WhsWorkExecuteDisplayAux_Extension
 			<Method>
 				<Name>getFieldMethodInfoByStepAux</Name>
 				<Source><![CDATA[
+    /// <summary>
+    /// SysDictMethod of current field parm method.
+    /// </summary>
+    /// <param name = "_model">model object.</param>
+    /// <param name = "_step">step to identify current field.</param>
+    /// <returns>SysDictMethod of current field parm method.</returns>
     public SysDictMethod getFieldMethodInfoByStepAux(Object _model, int _step)
     {
-        Set methods = this.modelDictClass().methods();
+        Set methods = this.modelDictClassAux().methods();
         SetEnumerator methodsEnumerator = methods.getEnumerator();
 
         SysDictMethod fieldMethodInfo;
@@ -677,24 +860,37 @@ final class WhsWorkExecuteDisplayAux_Extension
 ]]></Source>
 			</Method>
 			<Method>
+				<Name>dispatchInitAux</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Dispatch message to message queue.
+    /// </summary>
+    public void dispatchInitAux()
+    {
+        if(this.dictClassAux().hasObjectMethod(#Init))
+        {
+            this.dispatchAux(#Init, null);
+        }
+        else
+        {
+            this.dispatchAux(methodStr(WhsWorkExecuteDisplayAux, initAux), null);
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
 				<Name>generateEventMessagesAux</Name>
 				<Source><![CDATA[
     /// <summary>
     /// Generates standard event mesages.
     /// </summary>
     /// <param name = "_model">model object.</param>
-    public void generateEventMessagesAux(Object _model)
+    public void generateEventMessagesAux(Object _model, str _extraText)
     {
         if (step == 0)
         {
-            if(this.dictClass().hasObjectMethod(#Init))
-            {
-                this.dispatchAux(#Init, null);
-            }
-            else
-            {
-                this.dispatchAux(methodStr(WhsWorkExecuteDisplayAux, initAux), null);
-            }
+            this.dispatchInitAux();
 
             step = 1;
         }
@@ -713,9 +909,18 @@ final class WhsWorkExecuteDisplayAux_Extension
 
             str textFieldName = fieldMethodInfo.name() + 'Text';
 
-            str	value = this.getControlDataFromContainer(this.parmOriginalContainerAux(), textFieldName);
+            if (fieldMethodInfo.returnTypeName() == enumStr(NoYes))
+            {
+                NoYes noYesValue = _extraText == 'YesButton' ? NoYes::Yes : NoYes::No;
 
-            this.dispatchAux(methodStr(WhsWorkExecuteDisplayAux, updateModelByFieldAux), value);
+                this.dispatchAux(methodStr(WhsWorkExecuteDisplayAux, updateModelByFieldAux), noYesValue);
+            }
+            else
+            {
+                str	value = this.getControlDataFromContainer(this.parmOriginalContainerAux(), textFieldName);
+
+                this.dispatchAux(methodStr(WhsWorkExecuteDisplayAux, updateModelByFieldAux), value);
+            }
         }
     }
 
@@ -822,11 +1027,11 @@ final class WhsWorkExecuteDisplayAux_Extension
         
         if (packedModel == '')
         {
-            model = this.modelDictClass().makeObject();
+            model = this.modelDictClassAux().makeObject();
         }
         else
         {
-            model = FormJsonSerializer::deserializeObject(this.modelClassId(), packedModel);
+            model = FormJsonSerializer::deserializeObject(this.modelClassIdAux(), packedModel);
         }
 
         return model;
@@ -866,7 +1071,7 @@ final class WhsWorkExecuteDisplayAux_Extension
 
         Debug::assert(pageName != '');
 
-        SysDictClass dictClass = this.dictClass();
+        SysDictClass dictClass = this.dictClassAux();
 
         if (dictClass.hasObjectMethod(pageName + #ViewMethodPostfix))
         {
