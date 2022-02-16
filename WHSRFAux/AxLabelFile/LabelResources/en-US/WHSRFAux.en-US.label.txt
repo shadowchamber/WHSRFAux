@@ -1,4 +1,4 @@
-﻿ERR001=AUXWHSRF001: Service method should have one parameter.
+﻿ERR001=AUXWHSRF001: Service method should have 2 parameters.
  ;WHSRFAux
 ERR002=AUXWHSRF002: Object does not have such method %1
  ;WHSRFAux
