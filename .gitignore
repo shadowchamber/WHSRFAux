@@ -6,3 +6,7 @@
 /XppMetadata
 /bin
 /BuildProjectResult.xml
+/BPCheck.xml
+/BuildModelResult.err.xml
+/BuildProjectResult.err.xml
+/*.xref
